@@ -13,6 +13,5 @@ connection = pyodbc.connect('Driver={SQL Server};'
 
 
 cursor = connection.cursor()
-is_authenticated = False
 
 

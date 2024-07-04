@@ -71,12 +71,13 @@ def user_options(user_id):
     print("3: Reading the the contents from a special category")
     print("4: Reading the the contents from a special user")
     print("5: Search for a special title or content or keyword")
-    print("6: Exit")
+    print("6: View all the comments related to a post")
+    print("7: Exit")
 
     while(True):
       try:
         choice_after_login=input("So what to do? ")
-        if(choice_after_login in ['1','2','3','4','5','6']):
+        if(choice_after_login in ['1','2','3','4','5','6',7]):
           break
         else:
           print(f"Invalid input try again dear {first_name}")  
@@ -159,7 +160,13 @@ def user_options(user_id):
         print()
         print("No posts were found")  
         print()
-      
-    elif (choice_after_login=='6'):
+
+    elif(choice_after_login=='6'):
+        view_comments(user_id)
+        
+  
+     
+
+    elif (choice_after_login=='7'):
       con=False
       print(f"Take care dear {first_name}")

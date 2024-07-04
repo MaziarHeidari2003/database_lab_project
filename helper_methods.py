@@ -24,9 +24,16 @@ def like_post(user_id):
           break
         except:
           print("Invalid input")  
-    cursor.execute(f"AddLike ?,?",(user_id,post_id))
-    connection.commit()
-    print("You just liked a post!")  
+    try:      
+      cursor.execute(f"AddLike ?,?",(user_id,post_id))
+      connection.commit()
+      print("You just liked a post!") 
+    except:
+       cursor.execute("removeLike ?,?",(user_id,post_id))  
+       connection.commit()
+       print("You just unliked a post!") 
+
+
 
 
 
@@ -43,6 +50,26 @@ def add_comment(user_id):
       cursor.execute("AddComment ?,?,?",(user_id,post_id,comment_text))  
       connection.commit()
       print("You just added a comment!")
+
+
+def view_comments(user_id):
+    while(True):
+      try:
+        commented_post = int(input("Choose a post to see the related comments, enter the post id: "))
+        break
+      except:
+        print("Invalid input")  
+    cursor.execute("GetCommentsByPostID ?",(commented_post,))
+    cnt=0
+    for row in cursor.fetchall():
+        cnt+=1
+        print(row)
+    if cnt !=0:  
+        things_todo_when_loggedin(user_id)
+    else:
+        print()
+        print("No comments were found")  
+        print()
 
 
 
