@@ -10,3 +10,4 @@ connection = pyodbc.connect('Driver={SQL Server};'
 cursor = connection.cursor()
 
 My project is like a weblog about music, you can authenticate and publish posts and see others post and comment on them or like them and ...
+By them way I had to know lots of sql for this project!!!!!!!
