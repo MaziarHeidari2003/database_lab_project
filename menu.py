@@ -77,7 +77,7 @@ def user_options(user_id):
     while(True):
       try:
         choice_after_login=input("So what to do? ")
-        if(choice_after_login in ['1','2','3','4','5','6',7]):
+        if(choice_after_login in ['1','2','3','4','5','6','7']):
           break
         else:
           print(f"Invalid input try again dear {first_name}")  
@@ -88,16 +88,29 @@ def user_options(user_id):
 
   
     if(choice_after_login=='1'):
-      title=input("Your post title: ")
-      content=input("Your post content: ")
-      image=input("Your image file address: ")
-      category=input("Your category: ")
-      author_id=user_id # well im not gonna take users id as an input, imma find it myself
-      cursor.execute(f"insertpost ?,?,?,?,?", (title,content,image,category,author_id))
-      connection.commit()
-      print(f"Congrats {first_name}!You just created a new post!")
-      print()
-      
+      while(True):
+        try:    
+          title=input("Your post title: ")
+          content=input("Your post content: ")
+          image=input("Your image file address: ")
+          cursor.execute("Select category_name from category")
+          for row in cursor.fetchall():
+            print(row)
+          category=input("Your category: ")
+          cursor.execute("Select category_name from category")
+          for row in cursor.fetchall():
+                print(row[0])
+          author_id=user_id # well im not gonna take users id as an input, imma find it myself
+            
+          cursor.execute(f"insertpost ?,?,?,?,?", (title,content,image,category,author_id))
+          connection.commit()
+          print(f"Congrats {first_name}!You just created a new post!")
+          print()
+          break
+        except:
+            print("You are probably entring a undefined category,Try again")
+            
+        
 
     elif(choice_after_login=='2'):
       cursor.execute("Select id,title,content,category,published_date from post")
