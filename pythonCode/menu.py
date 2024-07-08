@@ -86,94 +86,25 @@ def user_options(user_id):
           print(f"Invalid input try again dear {first_name}")  
 
 
-  
     if(choice_after_login=='1'):
-      while(True):
-        try:    
-          title=input("Your post title: ")
-          content=input("Your post content: ")
-          image=input("Your image file address: ")
-          cursor.execute("Select category_name from category")
-          for row in cursor.fetchall():
-            print(row)
-          category=input("Your category: ")
-          cursor.execute("Select category_name from category")
-          for row in cursor.fetchall():
-                print(row[0])
-          author_id=user_id # well im not gonna take users id as an input, imma find it myself
-            
-          cursor.execute(f"insertpost ?,?,?,?,?", (title,content,image,category,author_id))
-          connection.commit()
-          print(f"Congrats {first_name}!You just created a new post!")
-          print()
-          break
-        except:
-            print("You are probably entring a undefined category,Try again")
-            
-        
+      post_publish(user_id,first_name)
 
     elif(choice_after_login=='2'):
-      cursor.execute("Select id,title,content,category,published_date from post")
-      for row in cursor.fetchall():
-        print(row)
-      print()  
-      cnt=0
-      for row in cursor.fetchall():
-        cnt+=1
-        print(row)
-      if cnt !=0:  
-        things_todo_when_loggedin(user_id)
-      else:
-        print()
-        print("No posts were found")  
-        print()
+      view_posts(user_id)
       
       
     elif(choice_after_login=='3'):
-      category=input(f"What category are you interested in, dear {first_name}?")
-      cursor.execute("Select p.id, p.title,p.content,u.first_name from Post as p join Category as c on p.category=c.id join user1 as u on u.id=p.author where c.category_name= ?", (category,))
-      cnt=0
-      for row in cursor.fetchall():
-        cnt+=1
-        print(row)
-      if cnt !=0:  
-        things_todo_when_loggedin(user_id)
-      else:
-        print()
-        print("No posts were found")  
-        print()
-      
+      cat_view_post(user_id,first_name)
 
     elif(choice_after_login=='4'):
       name_tuple=clean_full_name()
-      cursor.execute("Select p.id, p.title,p.content,c.category_name from Post as p join user1 as u on p.author=u.id join category as c on p.category=c.id where u.first_name=? and last_name=?",(name_tuple[0],name_tuple[1]))
-      cnt=0
-      for row in cursor.fetchall():
-        cnt+=1
-        print(row)
-      if cnt !=0:  
-        things_todo_when_loggedin(user_id)
-      else:
-        print()
-        print("No posts were found")  
-        print()
-     
+      author_post_view(user_id,name_tuple)
       
 
     elif(choice_after_login=='5'):
-      serach_string=input("So what are you looking for? ")
-      cursor.execute(f"Searchposts ?",(serach_string,) )
-      cnt=0
-      for row in cursor.fetchall():
-        cnt+=1
-        print(row)
-      if cnt !=0:  
-        things_todo_when_loggedin(user_id)
-      else:
-        print()
-        print("No posts were found")  
-        print()
+      search_post_view(user_id)
 
+      
     elif(choice_after_login=='6'):
         view_comments(user_id)
         
